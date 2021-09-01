@@ -48,7 +48,7 @@ You can run the commmands for SDD:
 python test_sdd.py
 ```
 
-Models for ETH/UCY will be online soon
+Models/Results for ETH/UCY will be online soon
 
 ## Citation
 
