@@ -54,3 +54,7 @@ If you find this code useful in your work then please cite
   year={2021}
 }
 ```
+
+## Acknowledgement
+
+The dataset processing is largely from [PECNET](https://github.com/HarshayuGirase/PECNet) and [Social-STGCNN](https://github.com/abduallahmohamed/Social-STGCNN). Many thanks to them.

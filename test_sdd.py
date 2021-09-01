@@ -41,6 +41,12 @@ parser.add_argument(
     default="best_dest1.pth*",
     help="specifying which model to use for testing",
 )
+parser.add_argument(
+    "--eval_opt",
+    type=int,
+    default=2,
+    help="specify ways to search: 1 for dtw; 2 for dtw + clustering",
+)
 
 args = parser.parse_args()
 
@@ -131,6 +137,7 @@ def dist_func_cos(x, y):
 
 
 def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
+    global args
     """
     data: [test_batch, seq, 2]
     expert_set : [train_batch, seq ,2]
@@ -213,17 +220,19 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
 
         loss = ceriterion(tmp_traj, expert_traj_v[:, :8])
 
-        """Opt1: for dtw matching only"""
-        min_k, min_k_indices = torch.topk(loss, 20, largest=False)
+        if args.eval_opt == 1:
+            """Opt1: for dtw matching only"""
+            min_k, min_k_indices = torch.topk(loss, 20, largest=False)
 
-        """Opt2: for dtw matching + clustering matching"""
-        min_k, min_k_indices = torch.topk(loss, 65, largest=False)
-        retrieved_expert = expert_set[min_k_indices][:, -1]
-        from sklearn.cluster import KMeans
+        elif args.eval_opt == 2:
+            """Opt2: for dtw matching + clustering matching"""
+            min_k, min_k_indices = torch.topk(loss, 65, largest=False)
+            retrieved_expert = expert_set[min_k_indices][:, -1]
+            from sklearn.cluster import KMeans
 
-        kmeans = KMeans(n_clusters=20, random_state=0).fit(
-            retrieved_expert.cpu().numpy()
-        )
+            kmeans = KMeans(n_clusters=20, random_state=0).fit(
+                retrieved_expert.cpu().numpy()
+            )
 
         iter_target = min_k_indices
 
@@ -231,25 +240,26 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
         end_point_appr = []
 
         """Back to indexing in real coords domain"""
-        """
-        How about comparing the mean values?
-        """
-        # for k in iter_target:
-        for k in kmeans.cluster_centers_:
-            test_end = data[i, -1]
+        if args.eval_opt == 1:
+            for k in iter_target:
+                test_end = data[i, -1]
+                exp_end = expert_set[k, -1]
+                min_k_end.append(torch.norm(test_end - exp_end, 2))
+                end_point_appr.append(exp_end)
 
-            """Opt1 """
-            # exp_end = expert_set[k, -1]
+            all_min_end.append(min(min_k_end))
+            rest_diff.append(end_point_appr[min_k_end.index(min(min_k_end))])
+        else:
+            for k in kmeans.cluster_centers_:
+                test_end = data[i, -1]
+                exp_end = torch.from_numpy(k).cuda()
 
-            """Opt2 """
-            exp_end = torch.from_numpy(k).cuda()
+                min_k_end.append(torch.norm(test_end - exp_end, 2))
+                end_point_appr.append(exp_end)
 
-            min_k_end.append(torch.norm(test_end - exp_end, 2))
-            end_point_appr.append(exp_end)
+            all_min_end.append(min(min_k_end))
 
-        all_min_end.append(min(min_k_end))
-
-        rest_diff.append(end_point_appr[min_k_end.index(min(min_k_end))])
+            rest_diff.append(end_point_appr[min_k_end.index(min(min_k_end))])
 
     return all_min_end, rest_diff
 
