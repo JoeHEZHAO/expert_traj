@@ -46,7 +46,7 @@ Models for ETH/UCY will be online soon
 If you find this code useful in your work then please cite
 
 ```
-@inproceedings{mangalam2020pecnet,
+@inproceedings{he2020where,
   title={Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples},
   author={He, Zhao and Richard P. Wildes},
   booktitle = {Proceedings of the International Conference on Computer Vision (ICCV)},
