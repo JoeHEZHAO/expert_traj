@@ -1,16 +1,9 @@
 # Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples
 
 This repository contains the code for the paper **[Where are you heading? Dynamic Trajectory Prediction with Expert Goal
-Examples]()**.
-
-Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
+Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 **Abstract**: Goal-conditioned approaches recently have been found very useful to human trajectory prediction, when adequate goal estimates are provided. Yet, goal inference is difficult in itself and often incurs extra learning effort. We propose to predict pedestrian trajectories via the guidance of goal expertise, which can be obtained with modest expense through a novel goal-search mechanism on already seen training examples. There are three key contributions in our study. First, we devise a framework that exploits nearest examples for high-quality goal position inquiry. This approach naturally considers multi-modality, physical constraints, compatibility with existing methods and is nonparametric; it therefore does not require additional learning effort typical in goal inference. Second, we present an end-to-end trajectory predictor that can efficiently associate goal retrievals to past motion information and dynamically infer possible future trajectories. Third, with these two novel techniques in hand, we conduct a series of experiments on two broadly explored datasets (SDD and ETH/UCY) and show that our approach surpasses previous state-of-the-art performance by notable margins and reduces the need for additional parameters
-
-<div align='center'>
-<img src="images/predicted.gif" style="display: inline; border-width: 0px;" width=410px></img>
-<img src="images/ground_truth.gif" style="display: inline; border-width: 0px;" width=410px></img>
-</div>
 
 <!-- ## Model -->
 
@@ -40,7 +33,7 @@ Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 <!-- where config_save_name is the name that the config file should be saved with ending in .yaml. -->
 
-## Running Models
+## Running Pre-trained Models
 
 You can run the commmands for SDD:
 
