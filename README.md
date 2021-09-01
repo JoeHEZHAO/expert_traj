@@ -1,4 +1,4 @@
-# Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples
+# ICCV 2021: Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples
 
 This repository contains the code for the paper **[Where are you heading? Dynamic Trajectory Prediction with Expert Goal
 Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
