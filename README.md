@@ -35,10 +35,10 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 ## Result
 
-| SDD  | ADE  | FDE   |
-| ---- | ---- | ----- |
-| Opt1 | 7.69 | 14.38 |
-| Opt2 | 7.51 | 13.21 |
+| **SDD**                           | **ADE** | **FDE** |
+| --------------------------------- | ------- | ------- |
+| **Eval-Opt1** (Reported in Paper) | 7.69    | 14.38   |
+| **Eval-Opt2**                     | 7.51    | 13.21   |
 
 ## Running Pre-trained Models
 
