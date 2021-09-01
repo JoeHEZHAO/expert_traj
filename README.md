@@ -33,6 +33,13 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 <!-- where config_save_name is the name that the config file should be saved with ending in .yaml. -->
 
+## Result
+
+| SDD  | ADE  | FDE   |
+| ---- | ---- | ----- |
+| Opt1 | 7.69 | 14.38 |
+| Opt2 | 7.51 | 13.21 |
+
 ## Running Pre-trained Models
 
 You can run the commmands for SDD:
