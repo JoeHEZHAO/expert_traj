@@ -37,13 +37,13 @@ parser.add_argument(
 parser.add_argument(
     "--model_name",
     type=str,
-    default="best_dest1.pth*",
+    default="sdd_best.pth*",
     help="specifying which model to use for testing",
 )
 parser.add_argument(
     "--eval_opt",
     type=int,
-    default=2,
+    default=1,
     help="specify ways to search: 1 for dtw; 2 for dtw + clustering",
 )
 
