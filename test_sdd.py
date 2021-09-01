@@ -86,7 +86,7 @@ test_dataset = SocialDataset(
     verbose=args.verbose,
 )
 
-model = social_stgcnn(
+model = Goal_example_model(
     input_feat=args.input_feat,
     output_feat=args.output_feat,
     config=hyper_params,

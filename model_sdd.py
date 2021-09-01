@@ -16,7 +16,7 @@ from gmm2d import *
 from MLP import *
 
 
-class social_stgcnn(nn.Module):
+class Goal_example_model(nn.Module):
     def __init__(
         self,
         config,
@@ -26,7 +26,7 @@ class social_stgcnn(nn.Module):
         pred_seq_len=12,
         non_local_loop=3,
     ):
-        super(social_stgcnn, self).__init__()
+        super(Goal_example_model, self).__init__()
         self.rnn_type = "LSTM"
         self.nlayers = 1
         self.pred_seq_len = pred_seq_len
