@@ -1,3 +1,8 @@
+"""
+Acknowledgement: function from Trajectron++
+https://github.com/StanfordASL/Trajectron-plus-plus
+"""
+
 import torch
 import torch.distributions as td
 import torch.nn.functional as F
