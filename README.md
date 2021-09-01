@@ -50,9 +50,11 @@ python test_sdd.py
 
 Models for ETH/UCY will be online soon
 
+## Citation
+
 If you find this code useful in your work then please cite
 
-```
+```bibtex
 @inproceedings{he2020where,
   title={Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples},
   author={He, Zhao and Richard P. Wildes},
