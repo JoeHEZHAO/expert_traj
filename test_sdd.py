@@ -19,12 +19,11 @@ from utils import *
 from soft_dtw_cuda import *
 import time
 
-parser = argparse.ArgumentParser(description="PECNet")
+parser = argparse.ArgumentParser(description="Expert_Goal_Exampls")
 
 parser.add_argument("--num_workers", "-nw", type=int, default=0)
 parser.add_argument("--gpu_index", "-gi", type=int, default=0)
 parser.add_argument("--config_filename", "-cfn", type=str, default="optimal.yaml")
-parser.add_argument("--save_file", "-sf", type=str, default="PECNET_social_model.pt")
 parser.add_argument("--verbose", "-v", action="store_true")
 parser.add_argument("--lr", type=float, default=0.0003, help="learning rate")
 parser.add_argument("--input_feat", type=int, default=2, help="learning rate")
