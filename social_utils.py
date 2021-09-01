@@ -289,11 +289,3 @@ class SocialDataset(data.Dataset):
         )  # for relative positioning
         if verbose:
             print("Initialized social dataloader...")
-
-
-"""
-We've provided pickle files, but to generate new files for different datasets or thresholds, please use a command like so:
-Parameter1: batchsize, Parameter2: time_thresh, Param3: dist_thresh
-"""
-
-# generate_pooled_data(512,0,25, train=True, verbose=True, root_path="./")

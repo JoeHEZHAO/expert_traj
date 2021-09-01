@@ -27,24 +27,18 @@ parser.add_argument("--config_filename", "-cfn", type=str, default="optimal.yaml
 parser.add_argument("--save_file", "-sf", type=str, default="PECNET_social_model.pt")
 parser.add_argument("--verbose", "-v", action="store_true")
 parser.add_argument("--lr", type=float, default=0.0003, help="learning rate")
-# parser.add_argument("--input_feat", type=int, default=6, help="learning rate")
 parser.add_argument("--input_feat", type=int, default=2, help="learning rate")
 parser.add_argument("--output_feat", type=int, default=128, help="learning rate")
 parser.add_argument(
     "--checkpoint",
     type=str,
-    # default="./checkpoint_sdd_cat",
     default="./checkpoint_sdd",
-    # default="./checkpoint_sdd_mean",
     help="specifying the model folder to load for testing",
 )
 parser.add_argument(
     "--model_name",
     type=str,
     default="best_dest1.pth*",
-    # default="val_best_317_*",
-    # default="val_best_436_*",
-    # default="val_best_88_*",
     help="specifying which model to use for testing",
 )
 
@@ -148,16 +142,8 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
         use_cuda=True,
         gamma=2.0,
         normalize=True,
-        # normalize=False,
-        # dist_func=dist_func_cos,
     )
-    # gamma 2.1 => 14.45;
-    # gamma 2.2 + gradient_eff 0.2 => 14.43;
-    # gamma 2.2 + gradient_eff 0.6 => 14.38;
-    # gamma 2.0 + gradient_eff 0.6 => 14.37;
-    # gamma 2.3 => 14.45;
 
-    # loss = ceriterion(data, expert_set)
     mse = torch.nn.MSELoss()
 
     num_of_trajs = data.shape[0]
@@ -201,7 +187,9 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
     data = torch.DoubleTensor(data).to(device)
     data_ori = torch.DoubleTensor(data_ori).to(device).squeeze()
 
-    """For random few shot ablation study """
+    """
+        For random few shot ablation study 
+    """
     # random_split_ratio = 0.9
     # expert_size = expert_traj_v.shape[0]
     # print(int(expert_size * random_split_ratio))
@@ -214,66 +202,21 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
 
     # t0 = time.time()
     for i in range(num_of_trajs):
-        """
-        Here decide if or not use coords or velocity for searching;
-        """
 
-        """
-        First, filter the geo-distance trajectories based on absolute coordinates values??
-        """
-        # ori_traj = data_ori[i, :8].unsqueeze(0)
-        # expert_num = expert_ori.shape[0]
-        # ori_traj = ori_traj.repeat(expert_num, 1, 1)
-
-        # loss = ceriterion(ori_traj, expert_ori[:, :8])
-        # min_k, min_k_indices = torch.topk(loss, 1000, largest=False)
-        # """Indexing in shifted traj domain"""
-        # tmp_expert_traj_v = expert_traj_v[min_k_indices]
-        # tmp_expert_traj_v = expert_set[min_k_indices]
-
-        """
-        Is there a way to weight these trajs?
-        """
-        # traj_weight = torch.range(1, 2.875, step=0.25).unsqueeze(0).cuda()
         tmp_traj = traj_v[i, :8].unsqueeze(0)
         tmp_traj_abs = data[i, :8].unsqueeze(0)
 
-        # expert_num = expert_set.shape[0]
         expert_num = expert_traj_v.shape[0]
-        # expert_num = len(min_k_indices)
 
         tmp_traj = tmp_traj.repeat(expert_num, 1, 1)
         tmp_traj_abs = tmp_traj_abs.repeat(expert_num, 1, 1)
 
-        # loss = ceriterion(tmp_traj, expert_set[:, :8])
-        # expert_tmp = torch.cat(
-        # [
-        # expert_traj_v[:, :8],
-        # expert_set[:, :8] / 2.0,
-        # ],
-        # -1,
-        # )
-
-        # loss = ceriterion(tmp_traj * traj_weight, expert_set[:, :8] * traj_weight)
-        # loss = ceriterion(tmp_traj * traj_weight, expert_traj_v[:, :8] * traj_weight)
-
-        # loss = ceriterion(tmp_traj_abs, expert_set[:, :8])
         loss = ceriterion(tmp_traj, expert_traj_v[:, :8])
-        """
-        Can this func do unaligned sequence matching??
 
-        Turns out it can not;
-        """
-        # loss = ceriterion(tmp_traj, expert_traj_v)
-        # loss = ceriterion(tmp_traj, tmp_expert_traj_v[:, :8])
-        # loss = torch.mean(torch.norm(tmp_traj - expert_traj_v[:, :8], dim=2), 1)
-        # loss = torch.mean(torch.norm(tmp_traj_abs - expert_set[:, :8], dim=2), 1)
-
+        """Opt1: for dtw matching only"""
         min_k, min_k_indices = torch.topk(loss, 20, largest=False)
-        # min_k, min_k_indices = torch.topk(loss, 15, largest=False)
-        # min_k, min_k_indices = torch.topk(loss, 40, largest=False)
 
-        """Try the clustering fashion"""
+        """Opt2: for dtw matching + clustering matching"""
         min_k, min_k_indices = torch.topk(loss, 65, largest=False)
         retrieved_expert = expert_set[min_k_indices][:, -1]
         from sklearn.cluster import KMeans
@@ -295,9 +238,10 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
         for k in kmeans.cluster_centers_:
             test_end = data[i, -1]
 
-            """Retrieval """
+            """Opt1 """
             # exp_end = expert_set[k, -1]
-            """ Retrieval + Clustering """
+
+            """Opt2 """
             exp_end = torch.from_numpy(k).cuda()
 
             min_k_end.append(torch.norm(test_end - exp_end, 2))
@@ -305,14 +249,8 @@ def expert_find(data, data_ori, expert_set, expert_ori, angles=None):
 
         all_min_end.append(min(min_k_end))
 
-        # print("Min loss of end point estimation is {}".format(all_min_end[-1]))
         rest_diff.append(end_point_appr[min_k_end.index(min(min_k_end))])
 
-    # print(
-    # "Averages inference time for each data instance {}".format(
-    # (time.time() - t0) / 2829
-    # )
-    # )
     return all_min_end, rest_diff
 
 
@@ -330,8 +268,6 @@ def test(test_dataset, train_dataset, best_of_n=20):
         )
     ):
 
-        # traj_v = np.gradient(np.transpose(traj, (0, 2, 1)), 0.4, axis=-1)
-        # traj_a = np.gradient(traj_v, 0.4, axis=-1)
         traj_v = np.gradient(np.transpose(traj, (0, 2, 1)), 0.2, axis=-1)
         traj_a = np.gradient(traj_v, 0.2, axis=-1)
         traj_v = torch.from_numpy(traj_v).permute(0, 2, 1)
@@ -355,10 +291,7 @@ def test(test_dataset, train_dataset, best_of_n=20):
         expert_traj_list = [x for x in expert_traj]
         expert_traj = np.concatenate(expert_traj_list, 0)
 
-        # end_error, rst = expert_find(traj, expert_traj)
-        # angles = np.arange(0, 360, 15)
         angles = [0]
-        # end_error, rst = expert_find(traj_np, expert_traj, angles)
         end_error, rst = expert_find(
             traj_np,
             test_dataset.trajectory_ori,
@@ -368,62 +301,17 @@ def test(test_dataset, train_dataset, best_of_n=20):
         )
         rst = torch.stack(rst)  # [num_of_objs, 2]
 
-        # import pdb
-
-        # pdb.set_trace()
-
         """Find the goal retrieval that is too wrong, i.e. > 100 pixels, do not trust this result anymore;
         """
         end_error = torch.stack(end_error)
-        # end_error = torch.where(end_error > 2000, -1 * torch.ones(1).cuda(), end_error)
-        # end_error = torch.where(end_error > 2000, -1 * torch.ones(1).cuda(), end_error)
-        # end_error_ind = (end_error == -1).nonzero()
-
-        # import pdb
-        # pdb.set_trace()
-        # sdd_stats = [x.item() for x in end_error]
-        # sdd_stats = np.array(sdd_stats)
-        # import pickle
-        # with open("sdd_stats.npy", "wb") as f:
-        # np.save(f, sdd_stats)
-        # pickle.dump(sdd_stats, f)
-        # print("Averaging end-point error is {}".format(sum(end_error) / len(end_error)))
-
-        """Pre-process data into relative coords"""
-        # input_traj = traj[:, : hyper_params["past_length"], :]
-
-        """ Use gt goals """
-        # dest = traj[:, -1].unsqueeze(1).repeat(1, 8, 1)
-        # dest = torch.mean(traj, 1).unsqueeze(1).repeat(1, 8, 1)
-        # dest = rst.unsqueeze(1).repeat(1, 8, 1)
-
-        # input_traj = torch.cat(
-        #     [
-        #         traj[:, : hyper_params["past_length"]] - (dest / 3.0),
-        #         traj_v[:, : hyper_params["past_length"]],
-        #         traj_a[:, : hyper_params["past_length"]],
-        #     ],
-        #     -1,
-        # )
 
         """ Use estimated goals """
         input_traj = traj[:, : hyper_params["past_length"]]
-        """Replace too large end error to the first/last position of input_traj"""
-        # rst[end_error_ind] = input_traj[end_error_ind, 0]
-        # rst[end_error_ind] = 0.0
 
         dest = rst.unsqueeze(1).reshape(traj.shape[0], 1, 2).repeat(1, 8, 1)
 
         """Goal-shift encoding"""
         input_traj = traj[:, : hyper_params["past_length"]] - (dest / 1.0)
-
-        # input_traj = traj[:, : hyper_params["past_length"]] - dest
-        # input_traj = torch.cat([traj[:, : hyper_params["past_length"]], dest[:, :1]], 1)
-
-        """Re-format dest """
-        # rst[end_error_ind] = input_traj[end_error_ind, -1]
-        # rst[end_error_ind] = 0.0
-        # dest = rst.unsqueeze(1).reshape(traj.shape[0], 1, 2).repeat(1, 8, 1)
 
         init_traj = traj[
             :, hyper_params["past_length"] - 1 : hyper_params["past_length"], :
@@ -458,7 +346,7 @@ def test(test_dataset, train_dataset, best_of_n=20):
             V_pred = torch.cumsum(V_pred, dim=1) + init_traj.repeat(1, 12, 1)
 
             """Plug dest to replace the last position"""
-            """Comment out if allow end-point sampling"""
+            """Comment out if allow end-point refinement"""
             V_pred[:, -1] = dest[:, -1]
 
             for n in range(traj.shape[0]):

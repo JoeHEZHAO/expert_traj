@@ -47,10 +47,6 @@ class social_stgcnn(nn.Module):
         self.out_sigma = MLP(output_feat, 2, hidden_size=[64, 32], activation="prelu")
         self.out_corr = MLP(output_feat, 1, hidden_size=[64, 32], activation="prelu")
 
-        # self.out_mus = MLP(output_feat, 2, hidden_size=[64, 32])
-        # self.out_sigma = MLP(output_feat, 2, hidden_size=[64, 32])
-        # self.out_corr = MLP(output_feat, 1, hidden_size=[64, 32], activation="prelu")
-
         self.non_local_theta = MLP(
             input_dim=output_feat,
             output_dim=output_feat,
