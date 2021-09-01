@@ -10,7 +10,7 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 <!-- Our model consists of two sequential steps: an endpoint prediction module and a social pooling module. The endpoint prediction module is a CVAE which models the desired end destination of a pedestrian as a representation of its past observed trajectories. The social pooling module considers the past history of all the pedestrians in the scene and their predicted endpoints from the endpoint module to predict socially compliant future trajectories. -->
 
 <div align='center'>
-  <img src="images/ICCV21_alg.jpg" style="display: inline; border-width: 0px;" width=610px></img>
+  <img src="images/ICCV21_alg.jpg" style="display: inline; border-width: 0px;" width=810px></img>
 </div>
 
 <!-- ## Setup -->
