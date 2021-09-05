@@ -54,7 +54,7 @@ You can run the command for ETH/UCY:
 python test_ethucy.py
 ```
 
-To switch subsets among the ETH/UCY, change the "dataset_name" in test_ethucy.py file, like 'eth/zara1/zara2/hotel/univ'
+To switch subsets among the ETH/UCY, change the **dataset_name** variable in test_ethucy.py file (e.g., eth/zara1/zara2/hotel/univ)
 
 ## Citation
 
