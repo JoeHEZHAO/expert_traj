@@ -42,13 +42,19 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 ## Running Pre-trained Models
 
-You can run the commmands for SDD:
+You can run the command for SDD:
 
 ```bash
 python test_sdd.py
 ```
 
-Models/Results for ETH/UCY will be online soon
+You can run the command for SDD:
+
+```bash
+python test_ethucy.py
+```
+
+To switch subsets among the ETH/UCY, change the "dataset_name" in test_ethucy.py file
 
 ## Citation
 
