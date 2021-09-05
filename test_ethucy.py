@@ -12,7 +12,7 @@ import torch.distributions.multivariate_normal as torchdist
 
 from utils_expert import *
 from metrics import *
-from model_lstm import social_stgcnn
+from model_lstm import Goal_Example_Model
 from helper_expert import *
 import copy
 from gmm2d import *
@@ -347,7 +347,7 @@ if save_expert_local:
         print("Saving two expert examples for dataset {}".format(dataset_name))
 
 # Defining the model
-model = social_stgcnn(
+model = Goal_Example_Model(
     n_stgcnn=1,
     n_txpcnn=5,
     input_feat=6,

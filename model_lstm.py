@@ -180,7 +180,7 @@ class st_gcn(nn.Module):
         return x, A
 
 
-class social_stgcnn(nn.Module):
+class Goal_Example_Model(nn.Module):
     def __init__(
         self,
         n_stgcnn=1,
@@ -192,7 +192,7 @@ class social_stgcnn(nn.Module):
         inter_feat=32,
         kernel_size=3,
     ):
-        super(social_stgcnn, self).__init__()
+        super(Goal_Example_Model, self).__init__()
         self.n_stgcnn = n_stgcnn
         self.n_txpcnn = n_txpcnn
         self.rnn_type = "LSTM"
