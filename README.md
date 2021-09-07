@@ -61,7 +61,7 @@ To switch subsets among the ETH/UCY, change the **dataset_name** variable in tes
 If you find this code useful in your work then please cite
 
 ```bibtex
-@inproceedings{he2020where,
+@inproceedings{he2021where,
   title={Where are you heading? Dynamic Trajectory Prediction with Expert Goal Examples},
   author={He, Zhao and Richard P. Wildes},
   booktitle = {Proceedings of the International Conference on Computer Vision (ICCV)},
