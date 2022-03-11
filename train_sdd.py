@@ -9,7 +9,7 @@ import argparse
 from social_utils import *
 import yaml
 
-from model_ssd import Goal_example_model
+from model_sdd import Goal_example_model
 import numpy as np
 import pdb
 from gmm2d import *
