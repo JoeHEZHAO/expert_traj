@@ -246,19 +246,19 @@ fde_ls = []
 print("*" * 50)
 
 # Load args
-args_path = "./checkpoint_ethucy/" + "/{}_args.pkl".format(dataset_name)
-with open(args_path, "rb") as f:
-    args = pickle.load(f)
+# args_path = "./checkpoint_ethucy/" + "/{}_args.pkl".format(dataset_name)
+# with open(args_path, "rb") as f:
+#     args = pickle.load(f)
 
-stats = "./checkpoint_ethucy/" + "/{}_constant_metrics.pkl".format(dataset_name)
-with open(stats, "rb") as f:
-    cm = pickle.load(f)
-print("Stats:", cm)
+# stats = "./checkpoint_ethucy/" + "/{}_constant_metrics.pkl".format(dataset_name)
+# with open(stats, "rb") as f:
+#     cm = pickle.load(f)
+# print("Stats:", cm)
 
 # Data prep
-obs_seq_len = args.obs_seq_len
-pred_seq_len = args.pred_seq_len
-data_set = "./datasets/" + args.dataset + "/"
+obs_seq_len = 8
+pred_seq_len = 12
+data_set = "./datasets/" + dataset_name + "/"
 
 dset_test = TrajectoryDataset(
     data_set + "test/",
@@ -357,9 +357,6 @@ model = Goal_Example_Model(
     pred_seq_len=12,
 ).cuda()
 model.eval()
-
-"""zara2"""
-# model_paths = glob.glob(exp_path + "/val_best_230.pth")
 
 # model_paths = glob.glob(exp_path)
 model_paths = glob.glob(paths)
