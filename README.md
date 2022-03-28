@@ -40,12 +40,12 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 | **Eval-Opt1** (Reported in Paper) | 7.69    | 14.38   |
 | **Eval-Opt2**                     | 7.51    | 13.21   |
 
-## Update
+## *Update (03/28/2022)
 As pointed out by others that our reported results might not be directly comparable with parallel works. We provide a modified results for all datasets using the mean value of predicted GMM2d (i.e. gmm2d.mus) as follow 
 | **Dataset**                           | **ADE** | **FDE** |
 | --------------------------------- | ------- | ------- |
 | **SDD**  | 10.49    | 13.21   |
-| **ETH**                     | 36.62    | 65.16   |
+| **ETH**                     | 0.3662    | 0.6516   |
 | **HOTEL**                     | 0.1076    | 0.1474   |
 | **ZARA1**                     | 0.1511   | 0.3106   |
 | **ZARA2**                     |  0.1160   |  0.2554  |
