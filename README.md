@@ -41,7 +41,7 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 | **Eval-Opt2**                     | 7.51    | 13.21   |
 
 ## *Update (03/28/2022)
-As pointed out by others that our reported results might not be directly comparable with parallel works. We provide a modified results for all datasets using the mean value of predicted GMM2d (i.e. gmm2d.mus) as follow 
+As pointed out by others that our reported results might not be directly comparable with parallel works. We provide a modified version of our results for all datasets using the mean value of predicted GMM2d (i.e. gmm2d.mus) as follow 
 | **Dataset**                           | **ADE** | **FDE** |
 | --------------------------------- | ------- | ------- |
 | **SDD**  | 10.49    | 13.21   |
