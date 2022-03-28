@@ -50,6 +50,7 @@ As pointed out by others that our reported results might not be directly compara
 | **ZARA1**                     | 0.1511   | 0.3106   |
 | **ZARA2**                     |  0.1160   |  0.2554  |
 | **UNIV**                     |  0.2017   | 0.4365   |
+
 In this way, our model only retreieve 20 destinations, select the best one and fill-in the midway trajectories deterministically.
 
 
