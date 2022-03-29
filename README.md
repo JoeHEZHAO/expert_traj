@@ -42,6 +42,11 @@ Examples]()**. Accepted to [ICCV 2021](http://iccv2021.thecvf.com/home)
 
 ## *Update (03/28/2022)
 As pointed out by others that our reported results might not be directly comparable with parallel works. We provide a modified version of our results for all datasets using the mean value of predicted GMM2d (i.e. gmm2d.mus) as follow 
+'''
+Change: https://github.com/JoeHEZHAO/expert_traj/blob/8b15a2ef8f9878f642082b3aec16fbf97bc72aed/test_sdd.py#L350
+To: V_pred = gmm2d.mus.squeeze()
+'''
+
 | **Dataset**                           | **ADE** | **FDE** |
 | --------------------------------- | ------- | ------- |
 | **SDD**  | 10.49    | 13.21   |
