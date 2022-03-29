@@ -51,7 +51,7 @@ As pointed out by others that our reported results might not be directly compara
 | **ZARA2**                     |  0.1160   |  0.2554  |
 | **UNIV**                     |  0.2017   | 0.4365   |
 
-In this way, our model only retreieve 20 destinations (w/o sampling anything from learned models), select the best one and fill-in the midway trajectories **deterministically** (This is really not our point but more comparable).
+In this way, our model only retreieve 20 destinations (**w/o** sampling anything from learned models), select the best one and fill-in the midway trajectories **deterministically** (This is really not our point but more comparable).
 
 
 ## Running Pre-trained Models
