@@ -46,9 +46,10 @@ As pointed out by others that our reported results might not be directly compara
 **Change**: 
 https://github.com/JoeHEZHAO/expert_traj/blob/8b15a2ef8f9878f642082b3aec16fbf97bc72aed/test_sdd.py#L350
 **To**: 
-'''bash
+
+```bash
 V_pred = gmm2d.mus.squeeze()
-'''
+```
 
 | **Dataset**                           | **ADE** | **FDE** |
 | --------------------------------- | ------- | ------- |
